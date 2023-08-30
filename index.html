@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phone Hunter</title>
+    <title>Ai Hub</title>
     <!-- font awesome -->
     <script
       src="https://kit.fontawesome.com/276201f3ac.js"
@@ -18,10 +18,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <header>
-      <main>
-        <footer></footer>
-      </main>
+    <header class="text-center p-4">
+      <button onclick="handleSort('isSorted')" id="sortbydate" class="btn btn-outline btn-error text-center">
+        Sort by Date
+      </button>
+      <button onclick="handleShowAll('showAll')" class="btn btn-primary btn-outline text-center"
+      >
+        Show All
+      </button>
     </header>
+    <main class="container mx-auto">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 mx-auto"
+        id="ai-container"
+      ></div>
+          <div id="modal-container" class="modal-container">
+
+    </main>
+    <footer></footer>
+    <script src="./code.js"></script>
   </body>
 </html>
