@@ -111,9 +111,15 @@ const handleArrow = async (modalId) => {
   } /></figure>
   <div class=" text-center space-y-3 p-4">
     <h2 class="font-semibold text-xl">${
-      modalInfo.input_output_examples[0].input
+      modalInfo.input_output_examples[0].input == "Hi, how are you doing today?"
+        ? modalInfo.input_output_examples[0].input
+        : modalInfo.input_output_examples[1].input
     }</h2>
-    <p>${modalInfo.input_output_examples[0].output}</p>
+    <p>${
+      modalInfo.input_output_examples[0].input == "Hi, how are you doing today?"
+        ? modalInfo.input_output_examples[0].output
+        : modalInfo.input_output_examples[1].output
+    }</p>
     <p> </p>
   </div>
 </div>
@@ -122,7 +128,11 @@ const handleArrow = async (modalId) => {
   </form>
 </dialog>`;
   modalContainer.appendChild(modalDiv);
-  console.log();
+  console.log(
+    modalInfo.input_output_examples[0].input == "Hi, how are you doing today?"
+      ? modalInfo.input_output_examples[0].output
+      : modalInfo.input_output_examples[1].output
+  );
   const modal = document.getElementById("my_modal");
   modal.showModal();
 };
