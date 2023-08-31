@@ -4,11 +4,12 @@ const loadAiData = async (isSorted, showAll) => {
   const getAllAi = data.data.tools;
   displayAi(getAllAi, isSorted, showAll);
 };
+
 //display ai div
 const displayAi = (getAllAi, isSorted, showAll) => {
   const aiContainer = document.getElementById("ai-container");
   aiContainer.innerHTML = "";
-  let slicedData = "";
+  let slicedData = [];
   if (!showAll) {
     slicedData = getAllAi.slice(0, 6);
     if (isSorted) {
@@ -33,20 +34,6 @@ const displayAi = (getAllAi, isSorted, showAll) => {
     }
   }
 
-  // let slicedData = getAllAi.slice(0, showAll ? getAllAi.length : 6);
-
-  // if (isSorted) {
-  //   slicedData.sort((a, b) => {
-  //     const date1 = new Date(a.published_in);
-  //     const date2 = new Date(b.published_in);
-  //     if (date1 > date2) return 1;
-  //     else if (date1 < date2) return -1;
-  //     return 0;
-  //   });
-  // } else {
-  //   slicedData = slicedData;
-  // }
-  // console.log(slicedData);
   slicedData.forEach((ai) => {
     const aiCard = document.createElement("div");
     aiCard.classList = `card bg-base-100 shadow-xl`;
@@ -83,7 +70,7 @@ const replaceImage = (e) => {
   e.src = `https://www.proremodeler.com/sites/default/files/Jasper%20copy.jpg`;
 };
 const handleShowAll = (showAll) => {
-  loadAiData(showAll);
+  loadAiData(false, showAll);
 };
 
 const handleArrow = async (modalId) => {
@@ -92,37 +79,55 @@ const handleArrow = async (modalId) => {
   );
   const data = await res.json();
   const modalInfo = data.data;
-  console.log(modalInfo);
+
   const modalContainer = document.getElementById("modal-container");
+  modalContainer.innerHTML = "";
   const modalDiv = document.createElement("div");
   modalDiv.innerHTML = `
-    <dialog id="my_modal" class="modal modal-bottom sm:modal-middle">
-  <form method="dialog" class="modal-box">
-    <h3 class="font-bold text-lg">Hello! ${modalId}</h3>
-    <p class="py-4">Press ESC key or click the button below to close</p>
-    <div class="modal-action">
-      <!-- if there is a button in form, it will close the modal -->
-      <button class="btn">Close</button>
+    <dialog id="my_modal" class="modal  modal-bottom sm:modal-middle ">
+    
+  <form method="dialog" class="bg-base-100  p-4 w-11/12 lg:w-3/4 mx-auto rounded-3xl">
+   <button class="btn btn-sm btn-circle btn-error absolute right-2 top-2 z-[999]">✕</button>
+    <div class="grid grid-cols-2 gap-4  ">  
+  <div class="rounded-3xl space-y-4 border border-[#EB5757] border-solid p-4 bg-[#EB57570D]">
+    <h2 class="font-semibold text-lg">${modalInfo.description}</h2>
+    <div class="flex items-center justify-center lg:justify-evenly md:gap-2   font-medium">
+    <div class="text-center bg-white text-[#03A30A] rounded-2xl p-2">${
+      modalInfo.pricing[0].plan
+    }</br> ${modalInfo.pricing[0].price}</div>
+    <div class="text-center bg-base-100 text-[#F28927] rounded-2xl p-2">${
+      modalInfo.pricing[1].plan
+    }</br>  ${modalInfo.pricing[1].price}</div>
+    <div class="text-center bg-base-100 text-[#EB5757] rounded-2xl p-2">${
+      modalInfo.pricing[2].plan
+    }</br>  ${modalInfo.pricing[2].price.slice(0, 10)}</div>
+    
     </div>
+    
+  </div>
+  <div class="w-full bg-base-100 rounded-3xl border border-[#E7E7E7] border-solid">
+  <figure class="p-4"><img class="rounded-2xl" src=${
+    modalInfo.image_link[0]
+  } /></figure>
+  <div class=" text-center space-y-3 p-4">
+    <h2 class="font-semibold text-xl">${
+      modalInfo.input_output_examples[0].input
+    }</h2>
+    <p>${modalInfo.input_output_examples[0].output}</p>
+    <p> </p>
+  </div>
+</div>
+</div>
+    
   </form>
 </dialog>`;
   modalContainer.appendChild(modalDiv);
-
+  console.log();
   const modal = document.getElementById("my_modal");
   modal.showModal();
 };
 
 const handleSort = (isSorted) => {
-  // const res = await fetch(`https://openapi.programming-hero.com/api/ai/tools`);
-  // const data = await res.json();
-  // const getAllAi = data.data.tools;
-  // getAllAi.sort((a, b) => {
-  //   const date1 = new Date(a.published_in);
-  //   const date2 = new Date(b.published_in);
-  //   if (date1 > date2) return 1;
-  //   else if (date1 < date2) return -1;
-  //   return 0;
-  // });
-  loadAiData(isSorted);
+  loadAiData(isSorted, false);
 };
 loadAiData();
